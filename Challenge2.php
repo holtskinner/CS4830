@@ -6,11 +6,11 @@
     public $HomeStadium;
     public $Players = array();
 
-    function Team($City, $Name, $HomeStadium, $Player) {
+    function Team($City, $Name, $HomeStadium) {
       $this->$City = $City;
       $this->$Name = $Name;
       $this->$HomeStadium = $HomeStadium;
-      array_push($this->$Players, $Player);
+      // array_push($this->$Players, $Player);
     }
 
   }
@@ -56,9 +56,10 @@
           echo $response;
         }
         elseif (isset($_GET['Players'])) {
-          $Players = $Teams[$TeamName];
+          $Players = $Teams[$TeamName]->$Players;
+          $response = json_encode($Players);
+          echo $response;
         }
-
         else {
           die("ERROR: INVALID PARAMETER");
         }
@@ -66,15 +67,25 @@
         break;
 
       case 'POST':
-        if(isset($_POST['filename'])) {
-
-        } else {
-          die("ERROR: INVALID PARAMETER");
+      //Does Team array exist?
+      if (isset($Teams)) {
+        if (in_array($_POST['Name'], $Teams)) {
+          echo "403";
+          break;
         }
-        break;
+      }
+      else {
+        $Teams = array(); //Create New Team Array
+      }
+      $City = $_POST['City'];
+      $Name = $_POST['Name'];
+      $Stadium = $_POST['Stadium'];
+      array_push($Teams, new Team($City, $Name, $Stadium));
+
+      break;
 
       case 'DELETE':
-      //Delete All teams butunsetting array of teams
+        //Delete All teams by unsetting array of teams
         unset($Teams);
       break;
 
