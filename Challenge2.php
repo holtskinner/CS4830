@@ -6,15 +6,27 @@
     var $HomeStadium;
     var $Players = array();
 
-    function Team($City, $Name, $HomeStadium, $Players) {
+    function Team($City, $Name, $HomeStadium, $Player) {
       $this->$City = $City;
       $this->$Name = $Name;
       $this->$HomeStadium = $HomeStadium;
-      array_push($this->$Players, "$Players");
+      array_push($this->$Players, $Player);
     }
   }
 
-  class Player
+  class Player {
+    var $FirstName;
+    var $LastName;
+    var $Age;
+    var $Salary;
+
+    function Player($FirstName, $LastName, $Age, $Salary) {
+      $this->$FirstName = $FirstName;
+      $this->$LastName = $LastName;
+      $this->$Age = $Age;
+      $this->$Salary = $Salary;
+    }
+  }
 
     //Which verb is being used?
     switch ($_SERVER['REQUEST_METHOD']) {
