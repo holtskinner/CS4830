@@ -1,4 +1,21 @@
 <?php
+
+  class Team {
+    var $City;
+    var $Name;
+    var $HomeStadium;
+    var $Players = array();
+
+    function Team($City, $Name, $HomeStadium, $Players) {
+      $this->$City = $City;
+      $this->$Name = $Name;
+      $this->$HomeStadium = $HomeStadium;
+      array_push($this->$Players, "$Players");
+    }
+  }
+
+  class Player
+
     //Which verb is being used?
     switch ($_SERVER['REQUEST_METHOD']) {
 
