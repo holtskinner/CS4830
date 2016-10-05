@@ -46,7 +46,7 @@
 
       case 'GET':
 
-        if (isset($_GET['Teams']) {
+        if (isset($_GET['Teams'])) {
           $response = json_encode($Teams);
           echo $response;
         }
