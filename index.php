@@ -44,7 +44,7 @@ class Stadium {
     $this->TicketPrice = $TicketPrice;
   }
 }
-
+//TODO FIX ALL OF THIS BY CREATING A DATABASE OR SOMETHING
 Flight::route('POST /index.php/Teams', function() {
   //Create New array if one doesn't exist
   if(!isset($Teams)) {
@@ -67,9 +67,9 @@ Flight::route('POST /index.php/Teams', function() {
 
 });
 
-// Flight::route('GET /index.php/Teams', function() {
-//   echo json_encode($Teams);
-// });
+Flight::route('GET /index.php/Teams', function() {
+  echo json_encode($Teams);
+});
 
 Flight::route('DELETE /index.php/Teams', function(){
   if (isset($Teams)) {
