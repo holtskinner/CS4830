@@ -77,9 +77,9 @@ Flight::route('DELETE /index.php/Teams', function(){
   }
 });
 
-
-
-
+Flight::route('PUT /index.php/Teams'), function(){
+  Team
+}
 
 Flight::start();
 ?>
