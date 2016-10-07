@@ -1,3 +1,7 @@
+DROP DATABASE IF EXISTS challenge2;
+CREATE DATABASE challenge2;
+use challenge2
+
 CREATE TABLE stadium(
 	name varchar(50) NOT NULL,
 	capacity int(7) NOT NULL,
