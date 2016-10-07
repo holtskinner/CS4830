@@ -7,33 +7,40 @@ require 'flight/Flight.php';
 require 'medoo.php';
 //Using Medoo.php framework with MySQL for database interactions
 
-//Create link to database
-$database = new medoo([
-	'database_type' => 'mysql',
-	'database_name' => 'challenge2',
-	'server' => 'localhost',
-	'username' => 'root',
-	'password' => '1234',
-	'charset' => 'utf8'
-]);
+function link_database() {
+	//Create link to database
+	$database = new medoo([
+		'database_type' => 'mysql',
+		'database_name' => 'challenge2',
+		'server' => 'localhost',
+		'username' => 'root',
+		'password' => '1234',
+		'charset' => 'utf8'
+	]);
+	return $database;
+}
+
 
 //DELETE ALL Teams
-Flight::route('DELETE /index.php/Teams', function($database) {
+Flight::route('DELETE /index.php/Teams', function() {
+	$database = link_database();
+
   $database->delete("team", "*");
 });
 
 Flight::route('POST /index.php/Teams', function() {
+	$database = link_database();
 
   //JSON data from body
   $json = Flight::request()->data;
-  var_dump($json);
   //Separate stadium sub-object out for simplicity
   $stadium = $json["stadium"];
 
   //INSERT Team and stadium into database
   $database->insert("team",[
-    "name" => $json->Name,
-    "city" => $json->City
+    "name" => $json["Name"],
+    "city" => $json["City"],
+		"stadiumName" => $stadium["Name"]
   ]);
 
   $database->insert("stadium",[
@@ -41,13 +48,19 @@ Flight::route('POST /index.php/Teams', function() {
     "capacity" => $stadium["Capacity"],
     "ticketprice" => $stadium["TicketPrice"]
   ]);
+
 });
 
-Flight::route('GET /index.php/Teams', function($database) {
-  echo "Get";
+Flight::route('GET /index.php/Teams', function() {
+	$database = link_database();
+
+	$allTeams = $database->select("team", [
+		"[<]stadium" => ["name" => "stadiumName"],
+	], "*");
+	echo json_encode($allTeams);
 });
 
-Flight::route('PUT /index.php/Teams', function($database) {
+Flight::route('PUT /index.php/Teams', function() {
   echo "PUT";
 });
 
