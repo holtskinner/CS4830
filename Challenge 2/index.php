@@ -61,14 +61,15 @@ Flight::route('GET /index.php/Teams', function() {
 	// $allStadiums = $database->select("stadium", "*");
 
 	$allTeams = $database->select("team", [
-		"[>]stadium" => ["stadiumName" => "name"],
-		"[>]player" => ["name" => "teamName"]
+		"[>]stadium" => "stadiumName",
+		"[>]player" => "teamName"
 	],[
-		"team.name",
+		
+		"team.teamName",
 		"team.city",
 
 		"homeStadium" => [
-			"stadium.name",
+			"stadium.stadiumName",
 			"stadium.capacity",
 			"stadium.ticketprice"
 		],
