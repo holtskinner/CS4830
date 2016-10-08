@@ -40,13 +40,13 @@ Flight::route('POST /index.php/Teams', function() {
 
   //INSERT Team and stadium into database
   $database->insert("team",[
-    "name" => $json["Name"],
+    "teamName" => $json["Name"],
     "city" => $json["City"],
 		"stadiumName" => $stadium["Name"]
   ]);
 
   $database->insert("stadium",[
-    "name" => $stadium["Name"],
+    "stadiumName" => $stadium["Name"],
     "capacity" => $stadium["Capacity"],
     "ticketprice" => $stadium["TicketPrice"]
   ]);
@@ -64,7 +64,7 @@ Flight::route('GET /index.php/Teams', function() {
 		"[>]stadium" => "stadiumName",
 		"[>]player" => "teamName"
 	],[
-		
+
 		"team.teamName",
 		"team.city",
 

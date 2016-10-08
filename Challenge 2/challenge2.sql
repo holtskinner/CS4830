@@ -18,7 +18,7 @@ CREATE TABLE team(
 ) ENGINE=InnoDB;
 
 CREATE TABLE player(
-	playerID int(10) AUTO INCREMENT,
+	playerID int(10) AUTO_INCREMENT,
 	fname varchar(50) NOT NULL,
 	lname varchar(50) NOT NULL,
 	teamName varchar(50) NOT NULL,
