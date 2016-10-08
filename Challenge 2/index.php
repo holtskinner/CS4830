@@ -35,6 +35,7 @@ Flight::route('POST /index.php/Teams', function() {
 
   //JSON data from body
   $json = Flight::request()->data;
+
   //Separate stadium sub-object out for simplicity
   $stadium = $json["stadium"];
 
@@ -83,10 +84,32 @@ Flight::route('GET /index.php/Teams', function() {
 ]);
 
 	echo json_encode($allTeams);
+
 });
 
 Flight::route('PUT /index.php/Teams', function() {
-  echo "PUT";
+
+	$database = link_database();
+	$json = Flight::request()->data;
+	$stadium = $json["stadium"];
+
+	//UPDATE Team and stadium in database
+	$database->update("team",[
+		"teamName" => $json["Name"],
+		"city" => $json["City"],
+		"stadiumName" => $stadium["Name"]
+	],[
+		"teamName[>]" => $json["Name"]
+	]);
+
+	$database->update("stadium",[
+		"stadiumName" => $stadium["Name"],
+		"capacity" => $stadium["Capacity"],
+		"ticketprice" => $stadium["TicketPrice"]
+	],[
+		"stadiumName[>]" => $stadium["Name"]
+	]);
+
 });
 
 Flight::start();
