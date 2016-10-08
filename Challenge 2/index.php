@@ -112,5 +112,9 @@ Flight::route('PUT /index.php/Teams', function() {
 
 });
 
+Flight::route('GET /index.php/Teams/@teamName', function($teamName) {
+	echo $teamName;
+}
+
 Flight::start();
 ?>
