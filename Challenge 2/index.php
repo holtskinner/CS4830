@@ -21,11 +21,13 @@ function link_database() {
 }
 
 
-//DELETE ALL Teams
+//DELETE Everything
 Flight::route('DELETE /index.php/Teams', function() {
 	$database = link_database();
 
-  $database->delete("team", "*");
+  $database->delete("team", []);
+	$database->delete("player", []);
+	$database->delete("stadium", []);
 });
 
 Flight::route('POST /index.php/Teams', function() {
@@ -53,10 +55,32 @@ Flight::route('POST /index.php/Teams', function() {
 
 Flight::route('GET /index.php/Teams', function() {
 	$database = link_database();
+	//TODO add join here that includes stadium and player info
+	// $allTeams = $database->select("team", "*");
+	// $allPlayers = $database->select("player", "*");
+	// $allStadiums = $database->select("stadium", "*");
 
 	$allTeams = $database->select("team", [
-		"[<]stadium" => ["name" => "stadiumName"],
-	], "*");
+		"[>]stadium" => ["stadiumName" => "name"],
+		"[>]player" => ["name" => "teamName"]
+	],[
+		"team.name",
+		"team.city",
+
+		"homeStadium" => [
+			"stadium.name",
+			"stadium.capacity",
+			"stadium.ticketprice"
+		],
+
+		"players" => [
+			"player.fname",
+			"player.lname",
+			"player.age",
+			"player.salary"
+		]
+]);
+
 	echo json_encode($allTeams);
 });
 

@@ -6,7 +6,7 @@ CREATE TABLE stadium(
 	name varchar(50) NOT NULL,
 	capacity int(7) NOT NULL,
 	ticketprice float(5) NOT NULL,
-	PRIMARY KEY(`name`)
+	PRIMARY KEY(name)
 ) ENGINE=InnoDB;
 
 CREATE TABLE team(
