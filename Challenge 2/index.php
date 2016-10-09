@@ -1,6 +1,6 @@
 <?php
-// ini_set('display_errors','On');
-// error_reporting(E_ALL | E_STRICT);
+ini_set('display_errors','On');
+error_reporting(E_ALL | E_STRICT);
 
 require 'flight/Flight.php';
 //Using Flight PHP framework flightphp.com for REST
@@ -56,11 +56,7 @@ Flight::route('POST /index.php/Teams', function() {
 
 Flight::route('GET /index.php/Teams', function() {
 	$database = link_database();
-	//TODO add join here that includes stadium and player info
-	// $allTeams = $database->select("team", "*");
-	// $allPlayers = $database->select("player", "*");
-	// $allStadiums = $database->select("stadium", "*");
-
+	//Working!
 	$allTeams = $database->select("team", [
 		"[>]stadium" => "stadiumName",
 		"[>]player" => "teamName"
@@ -114,7 +110,7 @@ Flight::route('PUT /index.php/Teams', function() {
 
 Flight::route('GET /index.php/Teams/@teamName', function($teamName) {
 	echo $teamName;
-}
+});
 
 Flight::start();
 ?>
