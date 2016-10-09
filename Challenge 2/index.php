@@ -95,7 +95,7 @@ Flight::route('PUT /index.php/Teams', function() {
 		"city" => $json["City"],
 		"stadiumName" => $stadium["Name"]
 	],[
-		"teamName[>]" => $json["Name"]
+		"teamName" => $json["Name"]
 	]);
 
 	$database->update("stadium",[
