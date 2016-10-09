@@ -103,13 +103,40 @@ Flight::route('PUT /index.php/Teams', function() {
 		"capacity" => $stadium["Capacity"],
 		"ticketprice" => $stadium["TicketPrice"]
 	],[
-		"stadiumName[>]" => $stadium["Name"]
+		"stadiumName" => $stadium["Name"]
 	]);
 
 });
 
 Flight::route('GET /index.php/Teams/@teamName', function($teamName) {
-	echo $teamName;
+	$database = link_database();
+
+	$team = $database->select("team", [
+		"[>]stadium" => "stadiumName",
+		"[>]player" => "teamName"
+	],[
+
+		"team.teamName",
+		"team.city",
+
+		"homeStadium" => [
+			"stadium.stadiumName",
+			"stadium.capacity",
+			"stadium.ticketprice"
+		],
+
+		"players" => [
+			"player.fname",
+			"player.lname",
+			"player.age",
+			"player.salary"
+		]
+],[
+	"teamName" => $teamName
+]);
+
+	echo json_encode($team);
+	
 });
 
 Flight::start();
