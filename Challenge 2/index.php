@@ -176,5 +176,21 @@ Flight::route('GET /index.php/Teams/@teamName/Players', function($teamName) {
 
 });
 
+//Get stadium for a team
+Flight::route('GET /index.php/Teams/@teamName/Stadium', function($teamName) {
+	$database = link_database();
+
+	$stadium = $database->select("team", [
+		"[>]stadium" => "stadiumName"
+	],[
+			"stadium.stadiumName",
+			"stadium.capacity",
+			"stadium.ticketprice"
+	],[
+			"teamName" => $teamName
+]);
+	echo json_encode($stadium);
+});
+
 Flight::start();
 ?>
