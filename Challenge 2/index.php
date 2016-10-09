@@ -30,7 +30,6 @@ Flight::route('DELETE /index.php/Teams', function() {
 	$database->delete("stadium", []);
 });
 
-//Add a Team
 Flight::route('POST /index.php/Teams', function() {
 	$database = link_database();
 
@@ -55,10 +54,9 @@ Flight::route('POST /index.php/Teams', function() {
 
 });
 
-//Get all teams
 Flight::route('GET /index.php/Teams', function() {
 	$database = link_database();
-//TODO fix error for only display one player per team output
+	//Working!
 	$allTeams = $database->select("team", [
 		"[>]stadium" => "stadiumName",
 		"[>]player" => "teamName"
@@ -85,7 +83,6 @@ Flight::route('GET /index.php/Teams', function() {
 
 });
 
-//Update a team
 Flight::route('PUT /index.php/Teams', function() {
 
 	$database = link_database();
@@ -111,7 +108,6 @@ Flight::route('PUT /index.php/Teams', function() {
 
 });
 
-//Get a particular team
 Flight::route('GET /index.php/Teams/@teamName', function($teamName) {
 	$database = link_database();
 
@@ -140,40 +136,7 @@ Flight::route('GET /index.php/Teams/@teamName', function($teamName) {
 ]);
 
 	echo json_encode($team);
-
-});
-
-//Add a Player to a Team
-Flight::route('POST /index.php/Teams/@teamName/Players', function($teamName) {
-
-	$database = link_database();
-	$json = Flight::request()->data;
-
-	$database->insert("player",[
-    "teamName" => $teamName,
-    "fname" => $json["FirstName"],
-		"lname" => $json["LastName"],
-		"age" => $json["Age"],
-		"salary" => $json["Salary"]
-  ]);
-
-});
-
-//Get all players for A team
-Flight::route('GET /index.php/Teams/@teamName/Players', function($teamName) {
-	$database = link_database();
-
-	$players = $database->select("player", [
-			"player.fname",
-			"player.lname",
-			"player.age",
-			"player.salary"
-],[
-	"teamName" => $teamName
-]);
-
-	echo json_encode($players);
-
+	
 });
 
 Flight::start();
