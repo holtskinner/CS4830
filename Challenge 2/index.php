@@ -1,6 +1,5 @@
 <?php
-ini_set('display_errors','On');
-error_reporting(E_ALL | E_STRICT);
+header('Content-Type: application/json');
 
 require 'flight/Flight.php';
 //Using Flight PHP framework flightphp.com for REST
@@ -41,6 +40,18 @@ Flight::route('POST /index.php/Teams', function() {
   $stadium = $json["stadium"];
 
   //INSERT Team and stadium into database
+  $database->insert("team",[
+    "teamName" => $json["Name"],
+    "city" => $json["City"],
+		"stadiumName" => $stadium["Name"]
+  ]);
+
+  $database->insert("stadium",[
+    "stadiumName" => $stadium["Name"],
+    "capacity" => $stadium["Capacity"],
+    "ticketprice" => $stadium["TicketPrice"]
+  ]);
+  
   $database->insert("team",[
     "teamName" => $json["Name"],
     "city" => $json["City"],
