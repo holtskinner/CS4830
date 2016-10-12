@@ -19,7 +19,6 @@ function link_database() {
 	return $database;
 }
 
-
 //DELETE Everything
 Flight::route('DELETE /index.php/Teams', function() {
 	$database = link_database();
@@ -41,55 +40,42 @@ Flight::route('POST /index.php/Teams', function() {
 
   //INSERT Team and stadium into database
   $database->insert("team",[
-    "teamName" => $json["Name"],
-    "city" => $json["City"],
-		"stadiumName" => $stadium["Name"]
+    "Name" => $json["Name"],
+    "City" => $json["City"]
   ]);
 
   $database->insert("stadium",[
-    "stadiumName" => $stadium["Name"],
-    "capacity" => $stadium["Capacity"],
-    "ticketprice" => $stadium["TicketPrice"]
+    "Name" => $stadium["Name"],
+    "Capacity" => $stadium["Capacity"],
+    "TicketPrice" => $stadium["TicketPrice"],
+		"TeamName" => $json["Name"]
   ]);
-  
-  $database->insert("team",[
-    "teamName" => $json["Name"],
-    "city" => $json["City"],
-		"stadiumName" => $stadium["Name"]
-  ]);
-
-  $database->insert("stadium",[
-    "stadiumName" => $stadium["Name"],
-    "capacity" => $stadium["Capacity"],
-    "ticketprice" => $stadium["TicketPrice"]
-  ]);
-
 });
 
 //Get all teams
 Flight::route('GET /index.php/Teams', function() {
 	$database = link_database();
-//TODO fix error for only display one player per team output
+
 	$allTeams = $database->select("team", [
-		"[>]stadium" => "stadiumName",
-		"[>]player" => "teamName"
+		// "[>]stadium" => ["team.Name" => "stadium.TeamName"]
+		// "[>]player" => ["team.Name" => "player.TeamName"]
 	],[
+		"team.Name",
+		"team.City"
 
-		"team.teamName",
-		"team.city",
-
-		"homeStadium" => [
-			"stadium.stadiumName",
-			"stadium.capacity",
-			"stadium.ticketprice"
-		],
-
-		"players" => [
-			"player.fname",
-			"player.lname",
-			"player.age",
-			"player.salary"
-		]
+		// "HomeStadium" => [
+		// 	"stadium.Name",
+		// 	"stadium.Capacity",
+		// 	"stadium.TicketPrice"
+		// ]
+		// ,
+		//
+		// "Players" => [
+		// 	"player.FirstName",
+		// 	"player.LastName",
+		// 	"player.Age",
+		// 	"player.Salary"
+		// ]
 ]);
 
 	echo json_encode($allTeams);
@@ -105,50 +91,50 @@ Flight::route('PUT /index.php/Teams', function() {
 
 	//UPDATE Team and stadium in database
 	$database->update("team",[
-		"teamName" => $json["Name"],
-		"city" => $json["City"],
-		"stadiumName" => $stadium["Name"]
+		"Name" => $json["Name"],
+		"City" => $json["City"],
+		"StadiumName" => $stadium["Name"]
 	],[
-		"teamName" => $json["Name"]
+		"Name" => $json["Name"]
 	]);
 
 	$database->update("stadium",[
-		"stadiumName" => $stadium["Name"],
-		"capacity" => $stadium["Capacity"],
-		"ticketprice" => $stadium["TicketPrice"]
+		"Name" => $stadium["Name"],
+		"Capacity" => $stadium["Capacity"],
+		"TicketPrice" => $stadium["TicketPrice"]
 	],[
-		"stadiumName" => $stadium["Name"]
+		"Name" => $stadium["Name"]
 	]);
-
 });
 
 //Get a particular team
 Flight::route('GET /index.php/Teams/@teamName', function($teamName) {
+
 	$database = link_database();
 
 	$team = $database->select("team", [
-		"[>]stadium" => "stadiumName",
-		"[>]player" => "teamName"
+		"[>]stadium" => ["team.Name" => "stadium.TeamName"],
+		"[>]player" => ["team.Name" => "player.TeamName"]
 	],[
 
-		"team.teamName",
-		"team.city",
+		"team.Name",
+		"team.City",
 
-		"homeStadium" => [
-			"stadium.stadiumName",
-			"stadium.capacity",
-			"stadium.ticketprice"
+		"HomeStadium" => [
+			"stadium.Name",
+			"stadium.Capacity",
+			"stadium.TicketPrice"
 		],
 
-		"players" => [
-			"player.fname",
-			"player.lname",
-			"player.age",
-			"player.salary"
+		"Players" => [
+			"player.FirstName",
+			"player.LastName",
+			"player.Age",
+			"player.Salary"
 		]
-],[
-	"teamName" => $teamName
-]);
+	],[
+		"team.Name" => $teamName
+	]);
 
 	echo json_encode($team);
 
@@ -162,25 +148,26 @@ Flight::route('POST /index.php/Teams/@teamName/Players', function($teamName) {
 
 	$database->insert("player",[
     "teamName" => $teamName,
-    "fname" => $json["FirstName"],
-		"lname" => $json["LastName"],
-		"age" => $json["Age"],
-		"salary" => $json["Salary"]
+    "FirstName" => $json["FirstName"],
+		"LastName" => $json["LastName"],
+		"Age" => $json["Age"],
+		"Salary" => $json["Salary"]
   ]);
 
 });
 
 //Get all players for A team
 Flight::route('GET /index.php/Teams/@teamName/Players', function($teamName) {
+
 	$database = link_database();
 
 	$players = $database->select("player", [
-			"player.fname",
-			"player.lname",
-			"player.age",
-			"player.salary"
+			"player.FirstName",
+			"player.LastName",
+			"player.Age",
+			"player.Salary"
 ],[
-	"teamName" => $teamName
+	"player.teamName" => $teamName
 ]);
 
 	echo json_encode($players);
@@ -191,16 +178,16 @@ Flight::route('GET /index.php/Teams/@teamName/Players', function($teamName) {
 Flight::route('GET /index.php/Teams/@teamName/Stadium', function($teamName) {
 	$database = link_database();
 
-	$stadium = $database->select("team", [
-		"[>]stadium" => "stadiumName"
+	$stadium = $database->select("stadium", [
+			"stadium.Name",
+			"stadium.Capacity",
+			"stadium.Ticketprice"
 	],[
-			"stadium.stadiumName",
-			"stadium.capacity",
-			"stadium.ticketprice"
-	],[
-			"teamName" => $teamName
+			"stadium.teamName" => $teamName
 ]);
+
 	echo json_encode($stadium);
+
 });
 
 Flight::start();
