@@ -51,7 +51,7 @@ Flight::route('POST /index.php/Teams', function() {
     "capacity" => $stadium["Capacity"],
     "ticketprice" => $stadium["TicketPrice"]
   ]);
-  
+
   $database->insert("team",[
     "teamName" => $json["Name"],
     "city" => $json["City"],
@@ -91,9 +91,8 @@ Flight::route('GET /index.php/Teams', function() {
 			"player.salary"
 		]
 ]);
-
+	var_dump($allTeams);
 	echo json_encode($allTeams);
-
 });
 
 //Update a team
