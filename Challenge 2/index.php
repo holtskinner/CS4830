@@ -69,7 +69,7 @@ Flight::route('POST /index.php/Teams', function() {
 //Get all teams
 Flight::route('GET /index.php/Teams', function() {
 	$database = link_database();
-//TODO fix error for only display one player per team output
+
 	$allTeams = $database->select("team", [
 		"[>]stadium" => "stadiumName",
 		"[>]player" => "teamName"
@@ -91,7 +91,7 @@ Flight::route('GET /index.php/Teams', function() {
 			"player.salary"
 		]
 ]);
-	var_dump($allTeams);
+
 	echo json_encode($allTeams);
 });
 
