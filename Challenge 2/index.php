@@ -3,8 +3,10 @@ header('Content-Type: application/json');
 
 require 'flight/Flight.php';
 //Using Flight PHP framework flightphp.com for REST
+//http://flightphp.com/
 require 'medoo.php';
 //Using Medoo.php framework with MySQL for database interactions
+//medoo.in
 
 function link_database() {
 	//Create link to database
@@ -90,9 +92,33 @@ Flight::route('GET /index.php/Teams', function() {
 			"player.age",
 			"player.salary"
 		]
-]);
+	]);
 
-	echo json_encode($allTeams);
+	//Formatting array output becuase PHP...
+	$allTeams = $allTeams[0];
+	//var_dump($allTeams);
+	$stadiumArray = array(
+		"Capacity" => $allTeams["homeStadium"]["capacity"],
+		"Name" => $allTeams["homeStadium"]["stadiumName"],
+		"TicketPrice" => $allTeams["homeStadium"]["ticketprice"]
+	);
+
+	$playersArray = array(
+		"FirstName" => $allTeams["players"]["fname"],
+		"LastName" => $allTeams["players"]["lname"],
+		"Age" => $allTeams["players"]["age"],
+		"Salary" => $allTeams["players"]["salary"],
+	);
+
+	$output = array(array(
+		"Name" => $allTeams["teamName"],
+		"City" => $allTeams["city"],
+		"stadium" => $stadiumArray,
+		"players" => $playersArray
+	));
+
+	echo json_encode($output);
+
 });
 
 //Update a team
