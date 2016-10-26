@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html>
 
@@ -9,8 +10,13 @@
 <body>
     <div class="container">
         <h1 class="center-align">Challenge 3</h1>
+        <?php
+        if ($_SESSION["fail"] == 1) {
+          echo '<h6 class="center-align">Try Again!</h6>';
+        }
+         ?>
         <div class="row">
-            <form class="col s12" action="POST">
+            <form class="col s12" action="page2.php" method="post">
                 <div class="row">
                     <div class="input-field col s6"> <i class="material-icons prefix">account_circle</i>
                         <input name="first-name" type="text" class="validate">
