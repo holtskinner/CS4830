@@ -1,20 +1,14 @@
-<?php session_start(); ?>
 <!DOCTYPE html>
 <html>
 
 <head>
-    <!-- Materialize by Google for fancy styles -->
+    <!-- Materialize by Google for fancy styles! -->
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /> </head>
 <body>
     <div class="container">
         <h1 class="center-align">Challenge 3</h1>
-        <?php
-        if ($_SESSION["fail"] == 1) {
-          echo '<h6 class="center-align">Try Again!</h6>';
-        }
-         ?>
         <div class="row">
             <form class="col s12" action="page2.php" method="post">
                 <div class="row">
@@ -27,10 +21,6 @@
                         <label for="last-name">Last Name</label>
                     </div>
                     <div class="input-field col s6"> <i class="material-icons prefix">cake</i>
-                        <input name="birthdate" type="date" class="datepicker">
-                        <label for="birthdate">Birthdate</label>
-                    </div>
-                    <div class="input-field col s6"> <i class="material-icons prefix">bubble_chart</i>
                         <input name="age" type="text" class="validate">
                         <label for="age">Age</label>
                     </div>
@@ -55,15 +45,5 @@
     </div>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="js/materialize.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('select').material_select();
-            $('.datepicker').pickadate({
-                selectMonths: true
-                , selectYears: 15
-            });
-        });
-    </script>
 </body>
-
 </html>
