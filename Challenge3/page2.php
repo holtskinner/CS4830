@@ -1,6 +1,9 @@
 <?php
   session_start();
 
+  //Allows transmitting of POST Variables to next page
+  header('HTTP/1.1 307 Temporary Redirect');
+
   //Redirect to homepage if form hasnt been submitted correctly
   function failure() {
     header("Location: index.php");
