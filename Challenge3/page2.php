@@ -24,11 +24,14 @@
     failure();
   } else {
 
-    setcookie("Age", $_POST["age"]);
+    setcookie("Age", htmlspecialchars($_POST["age"]));
     //Place phone number in session array
-    $_SESSION["Phone"] = $_POST["telephone"];
+    $_SESSION["Phone"] = htmlspecialchars($_POST["telephone"]);
 
+    $FirstName = htmlspecialchars($_POST["first-name"]);
+    $LastName = htmlspecialchars($_POST["last-name"]);
+    
     //Redirect to final page with query string
-    header("Location: final.php?FirstName=".$_POST["first-name"]."&LastName=".$_POST["last-name"]);
+    header("Location: final.php?FirstName=".$FirstName."&LastName=".$LastName);
 }
 ?>

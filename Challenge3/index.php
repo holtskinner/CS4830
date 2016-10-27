@@ -1,12 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<!-- Materialize by Google for fancy styles! -->
-	<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	<link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<?php include_once "materialize.php" ?>
 </head>
-
 <body>
 	<div class="container">
 		<h1 class="center-align">Challenge 3</h1>
@@ -44,11 +40,6 @@
 			</form>
 		</div>
 	</div>
-	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js">
-		< /sc < script type = "text/javascript"
-		src = "js/materialize.min.js" >
-
-	</script>
 </body>
 
 </html>
