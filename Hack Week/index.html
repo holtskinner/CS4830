@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+    <title>Hack Week</title>
+
+    <style>
+      #cookie {
+        width: 50%;
+        height: 50%;
+      }
+    </style>
+
+  </head>
+  <body>
+
+  <nav>
+   <div class="teal nav-wrapper">
+     <a href="index.html" class="brand-logo center">Hack Week</a>
+   <ul id="nav-mobile" class="left hide-on-med-and-down">
+        <li><a href="newfortune.html">Create New Fortune</a></li>
+        <li><a href="allfortunes.html">View All Fortunes</a></li>
+        <li><a href="deletefortunes.html">Delete Fortunes</a></li>
+      </ul>
+    </div>
+ </nav>
+
+ <main>
+   <div class="container center-align">
+     <img id="cookie" src="cookie.jpg"></img>
+   </div>
+  <div class="container center-align">
+    <h5 id="fortune" class="header col s12 light">Click the cookie for a fortune!</h5>
+  </div>
+ </main>
+  </body>
+
+    <script>
+    // For materialize navbar
+      $(".button-collapse").sideNav();
+
+      $("#cookie").click(function() {
+
+        $("#fortune").fadeOut(); //For cool effect
+        //setTimeout is needed because the AJAX request happens too fast for the fadeout, causes
+        setTimeout(function() {
+          $.get("api.php?fortune", function(data) {
+            $("#fortune").html(data).fadeIn();
+            console.log(data);
+          });
+        }, 300);
+      });
+    </script>
+
+</html>

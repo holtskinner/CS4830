@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <title>Hack Week</title>
+</head>
+  <body>
+
+  <nav>
+   <div class="teal nav-wrapper">
+     <a href="index.html" class="brand-logo center">Hack Week</a>
+   <ul id="nav-mobile" class="left hide-on-med-and-down">
+        <li><a href="newfortune.html">Create New Fortune</a></li>
+        <li><a href="allfortunes.html">View All Fortunes</a></li>
+        <li><a href="deletefortunes.html">Delete Fortunes</a></li>
+      </ul>
+    </div>
+ </nav>
+
+ <main>
+   <div class="container center-align">
+    <h2 class="teal-text">Add a fortune</h2>
+    <h5 id="output" class="header col s12 light">Think my fortunes aren't good enough? Make your own!</h5>
+   </div>
+   <div class="row container">
+     <form id="addFortune" class="col s12">
+       <div class="row center-align">
+         <div class="input-field col s12">
+          <input name="fortune" id="fortune" placeholder="No SQL Injections please..." length="200" type="text" required>
+          <label for="fortune">Fortune</label>
+        </div>
+      <button class="waves-effect waves-teal btn-flat" type="submit">Submit
+        <i class="material-icons right">mode_edit</i>
+      </button>
+    </div>
+    </form>
+  </div>
+ </main>
+</body>
+<script>
+  $("#addFortune").submit( function() {
+    if($("#fortune").length != 0) {
+      $.post("api.php", $(this).serialize(), function(data) {
+        $("#output").html(data);
+      });
+    }
+  });
+</script>
+</html>
